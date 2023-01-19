@@ -1,0 +1,1 @@
+"0","hist(mydata$cylinders_appraisal, xlab = ""Cylinders"", ylab = ""Number of cars"", main = ""Histogram of Cylinders of Purchased cars"")"

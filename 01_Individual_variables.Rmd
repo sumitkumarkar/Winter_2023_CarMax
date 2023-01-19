@@ -1,0 +1,289 @@
+---
+title: "1. Analysis of Individual Variables"
+author: "Sumit Kumar Kar"
+date: "1/12/2023"
+output: html_document
+tables: true
+header-includes:
+- \usepackage{caption}
+- \captionsetup[table]{labelformat=empty}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Reading the data
+library(readr)
+raw_data <- read_csv("CarMax_Data/ShowcaseDataWinter2023.csv")
+
+# Saving the data in RDS format
+saveRDS(raw_data, file = "My_Data/raw_df.rds")
+```
+```{r, include=FALSE}
+# Loading necessary libraries
+library(mosaic) # necessary for functions like tally, etc.
+```
+
+# Getting some basic ideas about the data
+
+Head of the data:
+
+```{r, echo=FALSE}
+head(raw_data)
+```
+
+Summary of the data:
+
+```{r, echo=FALSE}
+summary(raw_data)
+```
+
+Dimension of the data:
+
+```{r, echo=FALSE}
+dim(raw_data)
+```
+# Getting idea about each individual variable using one or two plots
+
+## Variables regarding Purchased cars
+
+```{r, echo=FALSE}
+# Barplot of Price of Purchased cars
+barplot(tally(raw_data$price), xlab = "Price", ylab = "Number of cars", main = "Barplot of Price of Purchased cars")
+```
+
+```{r, echo=FALSE}
+# Histogram of Model Year of Purchased cars
+hist(raw_data$model_year, xlab = "Model year", ylab = "Number of cars", main = "Histogram of Model Year of Purchased cars")
+```
+
+```{r, echo=FALSE}
+# Renaming the levels of mileage variable for convenience
+raw_data$mileage1 <- ifelse(raw_data$mileage == '0 to 5k miles', '000k to 005k miles', raw_data$mileage)
+
+raw_data$mileage1 <- ifelse(raw_data$mileage1 == '5k to 10k miles', '005k to 010k miles', raw_data$mileage1)
+
+raw_data$mileage1 <- ifelse(raw_data$mileage1 == '10k to 15k miles', '010k to 015k miles', raw_data$mileage1)
+
+raw_data$mileage1 <- ifelse(raw_data$mileage1 == '15k to 20k miles', '015k to 020k miles', raw_data$mileage1)
+
+raw_data$mileage1 <- ifelse(raw_data$mileage1 == '20k to 25k miles', '020k to 025k miles', raw_data$mileage1)
+
+raw_data$mileage1 <- ifelse(raw_data$mileage1 == '25k to 30k miles', '025k to 030k miles', raw_data$mileage1)
+
+raw_data$mileage1 <- ifelse(raw_data$mileage1 == '30k to 35k miles', '030k to 035k miles', raw_data$mileage1)
+
+raw_data$mileage1 <- ifelse(raw_data$mileage1 == '35k to 40k miles', '035k to 040k miles', raw_data$mileage1)
+
+raw_data$mileage1 <- ifelse(raw_data$mileage1 == '40k to 45k miles', '040k to 045k miles', raw_data$mileage1)
+
+raw_data$mileage1 <- ifelse(raw_data$mileage1 == '45k to 50k miles', '045k to 050k miles', raw_data$mileage1)
+
+raw_data$mileage1 <- ifelse(raw_data$mileage1 == '50k to 55k miles', '050k to 055k miles', raw_data$mileage1)
+
+raw_data$mileage1 <- ifelse(raw_data$mileage1 == '55k to 60k miles', '055k to 060k miles', raw_data$mileage1)
+
+raw_data$mileage1 <- ifelse(raw_data$mileage1 == '60k to 65k miles', '060k to 065k miles', raw_data$mileage1)
+
+raw_data$mileage1 <- ifelse(raw_data$mileage1 == '65k to 70k miles', '065k to 070k miles', raw_data$mileage1)
+
+raw_data$mileage1 <- ifelse(raw_data$mileage1 == '70k to 75k miles', '070k to 075k miles', raw_data$mileage1)
+
+raw_data$mileage1 <- ifelse(raw_data$mileage1 == '75k to 80k miles', '075k to 080k miles', raw_data$mileage1)
+
+raw_data$mileage1 <- ifelse(raw_data$mileage1 == '80k to 85k miles', '080k to 085k miles', raw_data$mileage1)
+
+raw_data$mileage1 <- ifelse(raw_data$mileage1 == '85k to 90k miles', '085k to 090k miles', raw_data$mileage1)
+
+raw_data$mileage1 <- ifelse(raw_data$mileage1 == '90k to 95k miles', '090k to 095k miles', raw_data$mileage1)
+
+raw_data$mileage1 <- ifelse(raw_data$mileage1 == '95k to 100k miles', '095k to 100k miles', raw_data$mileage1)
+
+
+# Barplot of Mileage of Purchased cars
+barplot(tally(raw_data$mileage1), xlab = "Mileage", ylab = "Number of cars", main = "Barplot of Mileage of Purchased cars")
+```
+
+```{r, echo=FALSE}
+# Barplot of Make of Purchased cars
+barplot(tally(raw_data$make), xlab = "Make", ylab = "Number of cars", main = "Barplot of Make of Purchased cars")
+```
+
+```{r, echo=FALSE}
+# Barplot of Model of Purchased cars
+barplot(tally(raw_data$model), xlab = "Model", ylab = "Number of cars", main = "Barplot of Model of Purchased cars")
+```
+
+```{r, echo=FALSE}
+# Barplot of Trim description of Purchased cars
+barplot(tally(raw_data$trim_descrip), xlab = "Trim description", ylab = "Number of cars", main = "Barplot of Trim description of Purchased cars")
+```
+
+```{r, echo=FALSE}
+# Barplot of Body of Purchased cars
+barplot(tally(raw_data$body), xlab = "Body", ylab = "Number of cars", main = "Barplot of Body of Purchased cars")
+```
+
+```{r, echo=FALSE}
+# Barplot of Color of Purchased cars
+barplot(tally(raw_data$color), xlab = "Color", ylab = "Number of cars", main = "Barplot of Color of Purchased cars")
+```
+
+```{r, echo=FALSE}
+# Barplot of Engine of Purchased cars
+barplot(tally(raw_data$engine), xlab = "Engine", ylab = "Number of cars", main = "Barplot of Engine of Purchased cars")
+```
+
+```{r, echo=FALSE}
+# Barplot and Histogram of Cylinders of Purchased cars
+barplot(tally(raw_data$cylinders), xlab = "Cylinders", ylab = "Number of cars", main = "Barplot of Cylinders of Purchased cars")
+hist(raw_data$cylinders, xlab = "Cylinders", ylab = "Number of cars", main = "Histogram of Cylinders of Purchased cars")
+```
+
+```{r, echo=FALSE}
+# Converting mpg_city variable to a numeric variable (it was not so due to the "null" values)
+raw_data$mpg_city <- as.numeric(raw_data$mpg_city)
+
+# Histogram of City mpg of Purchased cars
+hist(raw_data$mpg_city[raw_data$mpg_city!="null"], xlab = "City mpg", ylab = "Number of cars", main = "Histogram of City mpg of Purchased cars")
+```
+
+```{r, echo=FALSE}
+# Converting mpg_highway variable to a numeric variable (it was not so due to the "null" values)
+raw_data$mpg_highway <- as.numeric(raw_data$mpg_highway)
+
+# Histogram of Highway mpg of Purchased cars
+hist(raw_data$mpg_highway, xlab = "Highway mpg", ylab = "Number of cars", main = "Histogram of Highway mpg of Purchased cars")
+```
+
+```{r, echo=FALSE}
+# Histogram of Horsepower of Purchased cars
+hist(raw_data$horsepower, xlab = "Horsepower", ylab = "Number of cars", main = "Histogram of Horsepower of Purchased cars")
+```
+
+```{r, echo=FALSE}
+# Histogram of Fuel capacity of Purchased cars
+hist(raw_data$fuel_capacity, xlab = "Fuel capacity", ylab = "Number of cars", main = "Histogram of Fuel capacity of Purchased cars")
+```
+
+## Variables regarding Appraised cars
+
+```{r, echo=FALSE}
+# Renaming the levels of appraisal_offer variable for convenience
+raw_data$appraisal_offer1 <- ifelse(raw_data$appraisal_offer == '$5k to $10k', '$05k to $10k', raw_data$appraisal_offer)
+
+raw_data$appraisal_offer1 <- ifelse(raw_data$appraisal_offer1 == '$0k to $5k', '$00k to $5k', raw_data$appraisal_offer1)
+
+
+# Barplot of Appraisal offer of Appraised cars
+barplot(tally(raw_data$appraisal_offer1), xlab = "Appraisal offer", ylab = "Number of cars", main = "Barplot of Appraisal offer of Appraised cars")
+```
+
+```{r, echo=FALSE}
+# Histogram of Model Year of Appraised cars
+hist(raw_data$model_year_appraisal, xlab = "Model year", ylab = "Number of cars", main = "Histogram of Model Year of Appraised cars")
+```
+
+```{r, echo=FALSE}
+# Renaming the levels of mileage_appraisal variable for convenience
+raw_data$mileage_appraisal1 <- ifelse(raw_data$mileage_appraisal == '0 to 10k miles', '000k to 010k miles', raw_data$mileage_appraisal)
+
+raw_data$mileage_appraisal1 <- ifelse(raw_data$mileage_appraisal1 == '10k to 20k miles', '010k to 020k miles', raw_data$mileage_appraisal1)
+
+raw_data$mileage_appraisal1 <- ifelse(raw_data$mileage_appraisal1 == '20k to 30k miles', '020k to 030k miles', raw_data$mileage_appraisal1)
+
+raw_data$mileage_appraisal1 <- ifelse(raw_data$mileage_appraisal1 == '30k to 40k miles', '030k to 040k miles', raw_data$mileage_appraisal1)
+
+raw_data$mileage_appraisal1 <- ifelse(raw_data$mileage_appraisal1 == '40k to 50k miles', '040k to 050k miles', raw_data$mileage_appraisal1)
+
+raw_data$mileage_appraisal1 <- ifelse(raw_data$mileage_appraisal1 == '50k to 60k miles', '050k to 060k miles', raw_data$mileage_appraisal1)
+
+raw_data$mileage_appraisal1 <- ifelse(raw_data$mileage_appraisal1 == '60k to 70k miles', '060k to 070k miles', raw_data$mileage_appraisal1)
+
+raw_data$mileage_appraisal1 <- ifelse(raw_data$mileage_appraisal1 == '70k to 80k miles', '070k to 080k miles', raw_data$mileage_appraisal1)
+
+raw_data$mileage_appraisal1 <- ifelse(raw_data$mileage_appraisal1 == '80k to 90k miles', '080k to 90k miles', raw_data$mileage_appraisal1)
+
+raw_data$mileage_appraisal1 <- ifelse(raw_data$mileage_appraisal1 == '90k to 100k miles', '090k to 100k miles', raw_data$mileage_appraisal1)
+
+
+# Barplot of Mileage of Appraised cars
+barplot(tally(raw_data$mileage_appraisal1), xlab = "Mileage", ylab = "Number of cars", main = "Barplot of Mileage of Appraised cars")
+```
+
+```{r, echo=FALSE}
+# Barplot of Make of Appraised cars
+barplot(tally(raw_data$make_appraisal), xlab = "Make", ylab = "Number of cars", main = "Barplot of Make of Appraised cars")
+```
+
+```{r, echo=FALSE}
+# Barplot of Model of Appraised cars
+barplot(tally(raw_data$model_appraisal), xlab = "Model", ylab = "Number of cars", main = "Barplot of Model of Appraised cars")
+```
+
+```{r, echo=FALSE}
+# Barplot of Trim description of Appraised cars
+barplot(tally(raw_data$trim_descrip_appraisal), xlab = "Trim description", ylab = "Number of cars", main = "Barplot of Trim description of Appraised cars")
+```
+
+```{r, echo=FALSE}
+# Barplot of Body of Appraised cars
+barplot(tally(raw_data$body_appraisal), xlab = "Body", ylab = "Number of cars", main = "Barplot of Body of Appraised cars")
+```
+
+```{r, echo=FALSE}
+# Barplot of Color of Appraised cars
+barplot(tally(raw_data$color_appraisal), xlab = "Color", ylab = "Number of cars", main = "Barplot of Color of Appraised cars")
+```
+
+```{r, echo=FALSE}
+# Barplot of Engine of Appraised cars
+barplot(tally(raw_data$engine_appraisal), xlab = "Engine", ylab = "Number of cars", main = "Barplot of Engine of Appraised cars")
+```
+
+```{r, echo=FALSE}
+# Barplot and Histogram of Cylinders of Appraised cars
+barplot(tally(raw_data$cylinders_appraisal), xlab = "Cylinders", ylab = "Number of cars", main = "Barplot of Cylinders of Appraised cars")
+hist(raw_data$cylinders_appraisal, xlab = "Cylinders", ylab = "Number of cars", main = "Histogram of Cylinders of Appraised cars")
+```
+
+```{r, echo=FALSE}
+# Histogram of City mpg of Appraised cars
+hist(raw_data$mpg_city_appraisal, xlab = "City mpg", ylab = "Number of cars", main = "Histogram of City mpg of Appraised cars")
+```
+
+```{r, echo=FALSE}
+# Histogram of Highway mpg of Appraised cars
+hist(raw_data$mpg_highway_appraisal, xlab = "Highway mpg", ylab = "Number of cars", main = "Histogram of Highway mpg of Appraised cars")
+```
+
+```{r, echo=FALSE}
+# Histogram of Horsepower of Appraised cars
+hist(raw_data$horsepower_appraisal, xlab = "Horsepower", ylab = "Number of cars", main = "Histogram of Horsepower of Appraised cars")
+```
+
+```{r, echo=FALSE}
+# Converting fuel_capacity_appraisal variable to a numeric variable (it was not so due to the "null" values)
+raw_data$fuel_capacity_appraisal <- as.numeric(raw_data$fuel_capacity_appraisal)
+
+# Histogram of Fuel capacity of Appraised cars
+hist(raw_data$fuel_capacity_appraisal, xlab = "Fuel capacity", ylab = "Number of cars", main = "Histogram of Fuel capacity of Appraised cars")
+```
+
+```{r, echo=FALSE}
+# Barplot of Online appraisal flag of Appraised cars
+barplot(tally(raw_data$online_appraisal_flag), xlab = "Online appraisal flag", ylab = "Number of cars", main = "Barplot of Online appraisal flag of Appraised cars")
+```
+
+## Variable about location of transaction
+
+```{r, echo=FALSE}
+# Barplot of Transaction market
+barplot(tally(raw_data$market), xlab = "Market", ylab = "Number of cars", main = "Barplot of Transaction market")
+```
+
+```{r, include=FALSE}
+# Saving the derived data (derived from raw_df; it contains everything from raw_df and three new variables: mileage1, mileage_appraisal1, appraisal_offer1)
+saveRDS(raw_data, file = "My_Data/derived_df.rds")
+```
+

@@ -1,0 +1,3 @@
+"0","mydata$online_appraisal_flag <- as.numeric(mydata$online_appraisal_flag)"
+"2","Warning: NAs introduced by coercion"
+"0","hist(mydata$online_appraisal_flag, xlab = ""Online appraisal flag"", ylab = ""Number of cars"", main = ""Histogram of Online appraisal flag of Purchased cars"")"

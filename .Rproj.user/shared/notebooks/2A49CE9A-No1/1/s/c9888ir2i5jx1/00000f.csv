@@ -1,0 +1,1 @@
+"0","barplot(tally(mydata$market), xlab = ""Market"", ylab = ""Number of cars"", main = ""Barplot of Transaction market of Purchased cars"")"

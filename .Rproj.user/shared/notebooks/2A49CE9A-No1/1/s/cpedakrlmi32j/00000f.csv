@@ -1,0 +1,1 @@
+"0","barplot(tally(mydata$color_appraisal), xlab = ""Color"", ylab = ""Number of cars"", main = ""Barplot of Color of Purchased cars"")"

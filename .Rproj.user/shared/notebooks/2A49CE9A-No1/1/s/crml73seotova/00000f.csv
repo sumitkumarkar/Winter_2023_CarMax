@@ -1,0 +1,1 @@
+"0","hist(mydata$mpg_highway_appraisal, xlab = ""Highway mpg"", ylab = ""Number of cars"", main = ""Histogram of Highway mpg of Purchased cars"")"

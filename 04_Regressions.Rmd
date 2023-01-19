@@ -1,0 +1,41 @@
+---
+title: "4. Regressions"
+author: "Sumit Kumar Kar"
+date: "1/14/2023"
+output: html_document
+tables: true
+header-includes:
+- \usepackage{caption}
+- \captionsetup[table]{labelformat=empty}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Reading the data
+library(readr)
+derived_data <- readRDS("My_Data/derived_df.rds")
+```
+
+```{r, include=FALSE}
+# Loading necessary libraries
+library(mosaic) # necessary for functions like tally, etc.
+library(MASS) # necessary for functions like polr
+```
+
+Let us do categorical regression with response variable Price and explanatory variables Appraisal offer and Model Year. Below is the summary table.
+
+```{r, echo=FALSE}
+library(MASS)
+
+model1 <- polr(factor(price) ~ factor(appraisal_offer1) + model_year, Hess = TRUE, data=derived_data)
+# summary(model1)
+
+# store table
+ctable_model1 <- coef(summary(model1))
+# calculate and store p values
+p_val_model1 <- pnorm(abs(ctable_model1[, "t value"]), lower.tail = FALSE) * 2
+# combined table
+ptable_model1 <- cbind(ctable_model1, "p value" = p_val_model1)
+ptable_model1
+```

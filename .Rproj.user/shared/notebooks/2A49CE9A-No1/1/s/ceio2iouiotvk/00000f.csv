@@ -1,0 +1,13 @@
+"0","# Reading the data"
+"0",""
+"0","library(readr)"
+"0","mydata <- read_csv(""Data/ShowcaseDataWinter2023.csv"")"
+"2","Warning: One or more parsing issues, see `problems()` for details"
+"2","[1mRows: [22m[34m200000[39m [1mColumns: [22m[34m30[39m"
+"2","[36m--[39m [1mColumn specification[22m [36m-------------------------------------------------------------------------------------------------[39m
+[1mDelimiter:[22m "",""
+[31mchr[39m (18): price, appraisal_offer, online_appraisal_flag, mileage, make, model, trim_descrip, body, color, mpg_city, m...
+[32mdbl[39m (12): model_year, engine, cylinders, horsepower, fuel_capacity, model_year_appraisal, engine_appraisal, cylinders..."
+"2","
+[36mi[39m Use `spec()` to retrieve the full column specification for this data.
+[36mi[39m Specify the column types or set `show_col_types = FALSE` to quiet this message."

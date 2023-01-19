@@ -1,0 +1,1 @@
+"0","hist(mydata$fuel_capacity, xlab = ""Fuel capacity"", ylab = ""Number of cars"", main = ""Histogram of Fuel capacity of Purchased cars"")"

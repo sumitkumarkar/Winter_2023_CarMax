@@ -1,0 +1,241 @@
+---
+title: "3. Variable-wise comparison between Purchased and Aprraised cars"
+author: "Sumit Kumar Kar"
+date: "1/14/2023"
+output: html_document
+tables: true
+header-includes:
+- \usepackage{caption}
+- \captionsetup[table]{labelformat=empty}
+---
+
+In this file, I will do side by side plot of the variables common to the appraised and purchased cars. I will also do some additional exploration for these variables to make some conclusions that will be summarized in the final report.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Reading the data
+library(readr)
+derived_data <- readRDS("My_Data/derived_df.rds")
+
+```
+
+```{r, include=FALSE}
+# Loading necessary libraries
+library(mosaic) # necessary for functions like tally, etc.
+```
+
+# Side-by-side plots of each variable
+
+## Model year
+
+```{r, echo=FALSE}
+# Model year
+par(mfrow=c(1,2))    # set the plotting area into a 1*2 array
+hist(derived_data$model_year, xlab = "Model year", ylab = "Number of cars", main = "Purchased")
+hist(derived_data$model_year_appraisal, xlab = "Model year", ylab = "Number of cars", main = "Appraised")
+```
+
+
+```{r}
+hist(derived_data$model_year-derived_data$model_year_appraisal)
+summary(derived_data$model_year-derived_data$model_year_appraisal)
+sum(derived_data$model_year<derived_data$model_year_appraisal+4)/200000*100
+```
+The above results show that Model year of a person’s purchased car can be between 21 years older to 27 years younger than the appraised car. But 75% of the people purchase cars
+at least 1 year younger than the appraised car and 50% of the people purchase car at least 4 years younger than the appraised car.
+
+## Mileage
+
+```{r, echo=FALSE}
+# Mileage
+par(mfrow=c(1,2))    # set the plotting area into a 1*2 array
+barplot(tally(derived_data$mileage1), xlab = "Mileage", ylab = "Number of cars", main = "Purchased")
+barplot(tally(derived_data$mileage_appraisal1), xlab = "Mileage", ylab = "Number of cars", main = "Appraised")
+```
+## Make
+
+```{r, echo=FALSE}
+# Make
+par(mfrow=c(1,2))    # set the plotting area into a 1*2 array
+barplot(tally(derived_data$make), xlab = "Make", ylab = "Number of cars", main = "Purchased")
+barplot(tally(derived_data$make_appraisal), xlab = "Make", ylab = "Number of cars", main = "Appraised")
+```
+```{r}
+sum(derived_data$make == derived_data$make_appraisal)/200000*100
+sum(derived_data$make != derived_data$make_appraisal)/200000*100
+```
+This shows that 18% people purchase a car with same make as the appraised car.
+
+## Model
+
+```{r, echo=FALSE}
+# Model
+par(mfrow=c(1,2))    # set the plotting area into a 1*2 array
+barplot(tally(derived_data$model), xlab = "Model", ylab = "Number of cars", main = "Purchased")
+barplot(tally(derived_data$model_appraisal), xlab = "Model", ylab = "Number of cars", main = "Appraised")
+```
+```{r}
+sum(derived_data$model == derived_data$model_appraisal)/200000*100
+sum(derived_data$model != derived_data$model_appraisal)/200000*100
+```
+```{r}
+sum(derived_data$model == derived_data$model_appraisal & derived_data$make == derived_data$make_appraisal)/200000*100
+```
+This shows that 6.27% people stick to the same model too.
+
+## Trim description
+
+```{r, echo=FALSE}
+# Trim description
+par(mfrow=c(1,2))    # set the plotting area into a 1*2 array
+barplot(tally(derived_data$trim_descrip), xlab = "Trim description", ylab = "Number of cars", main = "Purchased")
+barplot(tally(derived_data$trim_descrip_appraisal), xlab = "Trim description", ylab = "Number of cars", main = "Appraised")
+```
+```{r}
+sum(derived_data$trim_descrip == derived_data$trim_descrip_appraisal & derived_data$trim_descrip_appraisal != "null" & derived_data$trim_descrip != "null")/200000*100
+```
+
+```{r}
+tally(trim_descrip ~ trim_descrip_appraisal, data = derived_data)/200000*100
+```
+This shows that not only 44% people stick to the same trim description, but also 20% people trade in a non-premium car to purchase a premium car. But most surprisingly, 12% people actually trade in a premium car to purchase a non-premium car.
+
+## Body
+
+```{r, echo=FALSE}
+# Body
+par(mfrow=c(1,2))    # set the plotting area into a 1*2 array
+barplot(tally(derived_data$body), xlab = "Body", ylab = "Number of cars", main = "Purchased")
+barplot(tally(derived_data$body_appraisal), xlab = "Body", ylab = "Number of cars", main = "Appraised")
+```
+```{r}
+sum(derived_data$body == derived_data$body_appraisal & derived_data$body_appraisal != "null" & derived_data$body != "null")/200000*100
+```
+This shows that 45% people purchase a car with same body as the appraised car.
+
+## Color
+
+```{r, echo=FALSE}
+# Color
+par(mfrow=c(1,2))    # set the plotting area into a 1*2 array
+barplot(tally(derived_data$color), xlab = "Color", ylab = "Number of cars", main = "Purchased")
+barplot(tally(derived_data$color_appraisal), xlab = "Color", ylab = "Number of cars", main = "Appraised")
+```
+```{r}
+sum(derived_data$color == derived_data$color_appraisal & derived_data$color_appraisal != "null" & derived_data$color != "null")/200000*100
+a <- sum(derived_data$color == derived_data$color_appraisal & (derived_data$color == "Black" |derived_data$color == "Gray" |derived_data$color == "Silver" |derived_data$color == "White" ))
+b <- sum(derived_data$color != derived_data$color_appraisal & (derived_data$color == "Black" |derived_data$color == "Gray" |derived_data$color == "Silver" |derived_data$color == "White" ))
+a/(a+b)*100
+```
+
+```{r, echo = FALSE}
+table_c <- tally(derived_data$color)
+table_c[order(table_c, decreasing = TRUE)]/200000*100
+```
+
+```{r, echo = FALSE}
+table_ca <- tally(derived_data$color_appraisal)
+table_ca[order(table_ca, decreasing = TRUE)]/200000*100
+```
+This shows thta be it a purchased or an appraised car, the most popular colors are white and black, followed by gray, and silver respectively. In fact, 76% people purchase a car out of these colors and 70% appraise a car out of these 4 colors. Also, 19% people purchase the same color.
+
+## Engine
+
+```{r, echo=FALSE}
+# Engine
+par(mfrow=c(1,2))    # set the plotting area into a 1*2 array
+barplot(tally(derived_data$engine), xlab = "Engine", ylab = "Number of cars", main = "Purchased")
+barplot(tally(derived_data$engine_appraisal), xlab = "Engine", ylab = "Number of cars", main = "Appraised")
+```
+```{r}
+sum(derived_data$engine == derived_data$engine_appraisal & derived_data$engine_appraisal != "null" & derived_data$engine != "null")/200000*100
+```
+This shows that 15% people purchase the same engine type.
+
+## Cylinders
+
+```{r, echo=FALSE}
+# Cylinders
+par(mfrow=c(2,2))    # set the plotting area into a 2*2 array
+barplot(tally(derived_data$cylinders), xlab = "Cylinders", ylab = "Number of cars", main = "Purchased")
+barplot(tally(derived_data$cylinders_appraisal), xlab = "Cylinders", ylab = "Number of cars", main = "Appraised")
+
+hist(derived_data$cylinders, xlab = "Cylinders", ylab = "Number of cars", main = "Purchased")
+hist(derived_data$cylinders_appraisal, xlab = "Cylinders", ylab = "Number of cars", main = "Appraised")
+```
+```{r}
+sum(derived_data$cylinders == derived_data$cylinders_appraisal & derived_data$cylinders_appraisal != "null" & derived_data$cylinders != "null")/200000*100
+derived_data_c = subset(derived_data, derived_data$cylinders_appraisal != "null" & derived_data$cylinders != "null")
+```
+```{r, echo = FALSE}
+table_cyl <- tally(derived_data$cylinders)
+table_cyl[order(table_cyl, decreasing = TRUE)]/200000*100
+```
+```{r, echo = FALSE}
+table_cyla <- tally(derived_data$cylinders_appraisal)
+table_cyla[order(table_cyla, decreasing = TRUE)]/200000*100
+```
+This shows that 53% people purchase the same number of cylinders. Be it a purchased or an appraised car, the most popular number of cylinders is 4, followed by 6 and 8 respectively. In fact, 99% of the (both purchased and appraised) cars have one of these 3 options and more than 55% cars have 4 cylinders.
+
+## City mpg
+
+```{r, echo=FALSE}
+# City mpg
+par(mfrow=c(1,2))    # set the plotting area into a 1*2 array
+hist(derived_data$mpg_city[derived_data$mpg_city!="null"], xlab = "City mpg", ylab = "Number of cars", main = "Purchased")
+hist(derived_data$mpg_city_appraisal[derived_data$mpg_city_appraisal!="null"], xlab = "City mpg", ylab = "Number of cars", main = "Appraised")
+```
+```{r}
+sum(derived_data$mpg_city < derived_data$mpg_city_appraisal & is.na(derived_data$mpg_city) == FALSE & is.na(derived_data$mpg_city_appraisal) == FALSE)/200000*100
+sum(derived_data$mpg_city > derived_data$mpg_city_appraisal & is.na(derived_data$mpg_city) == FALSE & is.na(derived_data$mpg_city_appraisal) == FALSE)/200000*100
+t.test(derived_data$mpg_city, derived_data$mpg_city_appraisal, paired = TRUE)
+```
+This shows that there is a significant difference between the city mpg of appraised and purchased cars.
+
+## Highway mpg
+
+```{r, echo=FALSE}
+# Highway mpg
+par(mfrow=c(1,2))    # set the plotting area into a 1*2 array
+hist(derived_data$mpg_highway, xlab = "Highway mpg", ylab = "Number of cars", main = "Purchased")
+hist(derived_data$mpg_highway_appraisal, xlab = "Highway mpg", ylab = "Number of cars", main = "Appraised")
+```
+```{r}
+sum(derived_data$mpg_highway < derived_data$mpg_highway_appraisal & is.na(derived_data$mpg_highway) == FALSE & is.na(derived_data$mpg_highway_appraisal) == FALSE)/200000*100
+sum(derived_data$mpg_highway > derived_data$mpg_highway_appraisal & is.na(derived_data$mpg_highway) == FALSE & is.na(derived_data$mpg_highway_appraisal) == FALSE)/200000*100
+t.test(derived_data$mpg_highway, derived_data$mpg_highway_appraisal, paired = TRUE)
+```
+This shows that there is a significant difference between the highwatympg of appraised and purchased cars.
+
+## Horsepower
+
+```{r, echo=FALSE}
+# Horsepower
+par(mfrow=c(1,2))    # set the plotting area into a 1*2 array
+hist(derived_data$horsepower, xlab = "Horsepower", ylab = "Number of cars", main = "Purchased")
+hist(derived_data$horsepower_appraisal, xlab = "Horsepower", ylab = "Number of cars", main = "Appraised")
+```
+
+```{r}
+sum(derived_data$horsepower < derived_data$horsepower_appraisal & is.na(derived_data$horsepower) == FALSE & is.na(derived_data$horsepower_appraisal) == FALSE)/200000*100
+sum(derived_data$horsepower > derived_data$horsepower_appraisal & is.na(derived_data$horsepower) == FALSE & is.na(derived_data$horsepower_appraisal) == FALSE)/200000*100
+t.test(derived_data$horsepower, derived_data$horsepower_appraisal, paired = TRUE)
+```
+This shows that there is a significant difference between the horsepower of appraised and purchased cars.
+
+## Fuel capacity
+
+```{r, echo=FALSE}
+# Fuel capacity
+par(mfrow=c(1,2))    # set the plotting area into a 1*2 array
+hist(derived_data$fuel_capacity, xlab = "Fuel capacity", ylab = "Number of cars", main = "Purchased")
+hist(derived_data$fuel_capacity_appraisal, xlab = "Fuel capacity", ylab = "Number of cars", main = "Appraised")
+```
+```{r}
+sum(derived_data$fuel_capacity < derived_data$fuel_capacity_appraisal & is.na(derived_data$fuel_capacity) == FALSE & is.na(derived_data$fuel_capacity_appraisal) == FALSE)/200000*100
+sum(derived_data$fuel_capacity > derived_data$fuel_capacity_appraisal & is.na(derived_data$fuel_capacity) == FALSE & is.na(derived_data$fuel_capacity_appraisal) == FALSE)/200000*100
+t.test(derived_data$fuel_capacity, derived_data$fuel_capacity_appraisal, paired = TRUE)
+```
+
+This shows that there is no (statistically) significant difference in the fuel capacity of the purchased car and appraised car of a person.

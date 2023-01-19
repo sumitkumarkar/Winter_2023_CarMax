@@ -1,0 +1,1 @@
+"0","barplot(tally(mydata$engine_appraisal), xlab = ""Engine"", ylab = ""Number of cars"", main = ""Barplot of Engine of Purchased cars"")"

@@ -1,0 +1,198 @@
+---
+title: "Untitled"
+output: html_document
+date: "2023-01-11"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r cars}
+# Reading the data
+
+library(readr)
+mydata <- read_csv("Data/ShowcaseDataWinter2023.csv")
+```
+
+```{r}
+# Loading necessary libraries
+library(mosaic)
+```
+
+
+```{r}
+# Basic properties of the data
+head(mydata)
+summary(mydata)
+dim(mydata)
+```
+
+```{r}
+barplot(tally(mydata$price), xlab = "Price", ylab = "Number of cars", main = "Barplot of Price of Purchased cars")
+```
+
+```{r}
+hist(mydata$model_year, xlab = "Model year", ylab = "Number of cars", main = "Histogram of Model Year of Purchased cars")
+```
+
+```{r}
+barplot(tally(mydata$mileage), xlab = "Mileage", ylab = "Number of cars", main = "Barplot of Mileage of Purchased cars")
+```
+
+```{r}
+barplot(tally(mydata$make), xlab = "Make", ylab = "Number of cars", main = "Barplot of Make of Purchased cars")
+```
+
+```{r}
+barplot(tally(mydata$model), xlab = "Model", ylab = "Number of cars", main = "Barplot of Model of Purchased cars")
+```
+
+```{r}
+barplot(tally(mydata$trim_descrip), xlab = "Trim description", ylab = "Number of cars", main = "Barplot of Trim description of Purchased cars")
+```
+
+```{r}
+barplot(tally(mydata$body), xlab = "Body", ylab = "Number of cars", main = "Barplot of Body of Purchased cars")
+```
+
+```{r}
+barplot(tally(mydata$color), xlab = "Color", ylab = "Number of cars", main = "Barplot of Color of Purchased cars")
+```
+
+```{r}
+barplot(tally(mydata$engine), xlab = "Engine", ylab = "Number of cars", main = "Barplot of Engine of Purchased cars")
+```
+
+```{r}
+hist(mydata$cylinders, xlab = "Cylinders", ylab = "Number of cars", main = "Histogram of Cylinders of Purchased cars")
+```
+
+```{r}
+mydata$mpg_city <- as.numeric(mydata$mpg_city)
+
+hist(mydata$mpg_city[mydata$mpg_city!="null"], xlab = "City mpg", ylab = "Number of cars", main = "Histogram of City mpg of Purchased cars")
+```
+
+```{r}
+mydata$mpg_highway <- as.numeric(mydata$mpg_highway)
+
+hist(mydata$mpg_highway, xlab = "Highway mpg", ylab = "Number of cars", main = "Histogram of Highway mpg of Purchased cars")
+```
+
+```{r}
+hist(mydata$horsepower, xlab = "Horsepower", ylab = "Number of cars", main = "Histogram of Horsepower of Purchased cars")
+```
+
+```{r}
+hist(mydata$fuel_capacity, xlab = "Fuel capacity", ylab = "Number of cars", main = "Histogram of Fuel capacity of Purchased cars")
+```
+
+```{r}
+barplot(tally(mydata$appraisal_offer), xlab = "Appraisal offer", ylab = "Number of cars", main = "Barplot of Appraisal offer of Appraised cars")
+```
+
+```{r}
+hist(mydata$model_year_appraisal, xlab = "Model year", ylab = "Number of cars", main = "Histogram of Model Year of Purchased cars")
+```
+
+```{r}
+barplot(tally(mydata$mileage_appraisal), xlab = "Mileage", ylab = "Number of cars", main = "Barplot of Mileage of Purchased cars")
+```
+
+```{r}
+barplot(tally(mydata$make_appraisal), xlab = "Make", ylab = "Number of cars", main = "Barplot of Make of Purchased cars")
+```
+
+```{r}
+barplot(tally(mydata$model_appraisal), xlab = "Model", ylab = "Number of cars", main = "Barplot of Model of Purchased cars")
+```
+
+```{r}
+barplot(tally(mydata$trim_descrip_appraisal), xlab = "Trim description", ylab = "Number of cars", main = "Barplot of Trim description of Purchased cars")
+```
+
+```{r}
+barplot(tally(mydata$body_appraisal), xlab = "Body", ylab = "Number of cars", main = "Barplot of Body of Purchased cars")
+```
+
+```{r}
+barplot(tally(mydata$color_appraisal), xlab = "Color", ylab = "Number of cars", main = "Barplot of Color of Purchased cars")
+```
+
+```{r}
+barplot(tally(mydata$engine_appraisal), xlab = "Engine", ylab = "Number of cars", main = "Barplot of Engine of Purchased cars")
+```
+
+```{r}
+hist(mydata$cylinders_appraisal, xlab = "Cylinders", ylab = "Number of cars", main = "Histogram of Cylinders of Purchased cars")
+```
+
+```{r}
+hist(mydata$mpg_city_appraisal, xlab = "City mpg", ylab = "Number of cars", main = "Histogram of City mpg of Purchased cars")
+```
+
+```{r}
+hist(mydata$mpg_highway_appraisal, xlab = "Highway mpg", ylab = "Number of cars", main = "Histogram of Highway mpg of Purchased cars")
+```
+
+```{r}
+hist(mydata$horsepower_appraisal, xlab = "Horsepower", ylab = "Number of cars", main = "Histogram of Horsepower of Purchased cars")
+```
+
+```{r}
+mydata$fuel_capacity_appraisal <- as.numeric(mydata$fuel_capacity_appraisal)
+
+hist(mydata$fuel_capacity_appraisal, xlab = "Fuel capacity", ylab = "Number of cars", main = "Histogram of Fuel capacity of Purchased cars")
+```
+
+```{r}
+mydata$online_appraisal_flag <- as.numeric(mydata$online_appraisal_flag)
+
+hist(mydata$online_appraisal_flag, xlab = "Online appraisal flag", ylab = "Number of cars", main = "Histogram of Online appraisal flag of Purchased cars")
+```
+
+```{r}
+barplot(tally(mydata$market), xlab = "Market", ylab = "Number of cars", main = "Barplot of Transaction market of Purchased cars")
+```
+
+
+
+
+
+```{r}
+x <- mean(model_year~mileage, data=mydata)
+x
+plot(x)
+```
+
+```{r}
+mydata_1 <- subset(mydata, is.na(price) == FALSE & is.na(appraisal_offer) == FALSE)
+
+dim(mydata_1)
+```
+
+```{r}
+mod <- glm(factor(price)~factor(appraisal_offer)+model_year, family = binomial, data=mydata)
+summary(mod)
+```
+
+```{r}
+chisq.test(mydata$price, mydata$appraisal_offer)
+```
+
+```{r}
+tally(mydata$price)
+
+barplot(tally(mydata$price))
+
+mydata$appraisal_offer1 <- ifelse(mydata$appraisal_offer == '$5k to $10k', '$05k to $10k', mydata$appraisal_offer)
+mydata$appraisal_offer1 <- ifelse(mydata$appraisal_offer1 == '$0k to $5k', '$00k to $5k', mydata$appraisal_offer1)
+barplot(tally(mydata$appraisal_offer))
+barplot(tally(mydata$appraisal_offer1))
+
+tally(price~appraisal_offer, data=mydata)
+
+barplot(tally(price~appraisal_offer, data=mydata))
+```
+

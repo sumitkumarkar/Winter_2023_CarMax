@@ -1,0 +1,1 @@
+"0","barplot(tally(mydata$mileage_appraisal), xlab = ""Mileage"", ylab = ""Number of cars"", main = ""Barplot of Mileage of Purchased cars"")"

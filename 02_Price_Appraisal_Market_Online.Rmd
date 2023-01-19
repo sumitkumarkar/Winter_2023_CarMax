@@ -1,0 +1,160 @@
+---
+title: "2. Analysis of Price, Appraisal offers, Market, and Online appraisal flag"
+author: "Sumit Kumar Kar"
+date: "1/13/2023"
+output: html_document
+tables: true
+header-includes:
+- \usepackage{caption}
+- \captionsetup[table]{labelformat=empty}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Reading the data
+library(readr)
+derived_data <- readRDS("My_Data/derived_df.rds")
+```
+
+```{r, include=FALSE}
+# Loading necessary libraries
+library(mosaic) # necessary for functions like tally, etc.
+```
+
+# Relation between Appraisal offer and Price
+
+```{r, echo = FALSE}
+table_p <- tally(derived_data$price)
+table_p[order(table_p, decreasing = TRUE)]/200000*100
+```
+
+```{r, echo = FALSE}
+table_ao <- tally(derived_data$appraisal_offer1)
+table_ao[order(table_ao, decreasing = TRUE)]/200000*100
+```
+
+Contingency table between Appraisal offer and Price
+```{r, echo = FALSE}
+table_ao_p <- table(derived_data$appraisal_offer1, derived_data$price)
+table_ao_p
+```
+
+Heat map between Appraisal offer and Price
+
+```{r, echo=FALSE}
+heatmap(t(table_ao_p), # Draw heat map without dendrograms
+        Rowv = NA,
+        Colv = NA, xlab = "Appraisal offer", ylab = "Price", main = "Heat map between Appraisal offer and Price")
+```
+
+We can see that price of purchased cars increases with appraised values.
+
+Chi-squared test between Appraisal offer and Price
+
+```{r}
+chisq.test(derived_data$price, derived_data$appraisal_offer1)
+```
+The p-value is very small, which implies that Appraisal offer and Price are dependent.
+
+# Relation between Market and Price/Appraisal offer
+
+Let us see the percentage of transactions done in each market (in decreasing order).
+```{r, echo = FALSE}
+table_m <- tally(derived_data$market)
+table_m[order(table_m, decreasing = TRUE)]/200000*100
+```
+The above table shows that the maximum number of transactions takes place in Market 14 and the minimum in Market 13. 
+
+Contingency table between Market and Price
+```{r, echo = FALSE}
+table_m_p <- table(derived_data$market, derived_data$price)
+table_m_p
+```
+
+Heat map between Market and Price
+
+```{r, echo=FALSE}
+#par(mar = c(5, 4, 2, 2) + 0.1)
+heatmap(t(table_m_p), # Draw heat map without dendrograms
+        Rowv = NA,
+        Colv = NA, xlab = "Market", ylab = "Price", main = "Heat map between Market and Price")
+```
+
+Chi-squared test between Market and Price
+
+```{r}
+chisq.test(derived_data$price, derived_data$market)
+```
+The p-value is very small, which implies that Market and Price are dependent.
+
+Contingency table between Market and Appraisal offer
+
+```{r, echo = FALSE}
+table_m_ao <- table(derived_data$market, derived_data$appraisal_offer1)
+table_m_ao
+```
+
+Heat map between Market and Appraisal offer
+
+```{r, echo=FALSE}
+heatmap(t(table_m_ao), # Draw heat map without dendrograms
+        Rowv = NA,
+        Colv = NA, xlab = "Market", ylab = "Price", main = "Heat map between Market and Appraisal offer")
+```
+
+Chi-squared test between Market and Appraisal offer
+
+```{r}
+chisq.test(derived_data$appraisal_offer1, derived_data$market)
+```
+The p-value is very small, which implies that Market and Appraisal offer are dependent.
+
+# Relation between Online appraisal flag and Price/Appraisal offer
+
+Let us see the percentages of transactions done online vs. in-person
+
+```{r, echo=FALSE}
+tally(derived_data$online_appraisal_flag)/200000*100
+```
+The above table shows that 73% of the transactions took place in-person and 25% online. Let us make bar plots to check the price and appraisal offer for two types of transactions (we will exclude the null values, i.e., for which online/in-person is not known).
+
+```{r, echo=FALSE}
+# Removing the null values
+derived_data_oaf = subset(derived_data, derived_data$online_appraisal_flag != 'null')
+
+tally_oaf_p <- tally(online_appraisal_flag ~ price, data=derived_data_oaf)
+barplot(tally_oaf_p, beside = TRUE, legend = TRUE, xlab = "Price", ylab = "Number of cars", main = "Barplot between Online appraisal flag and Price")
+
+tally_oaf_ao <- tally(online_appraisal_flag ~ appraisal_offer1, data=derived_data_oaf)
+barplot(tally_oaf_ao, beside = TRUE, legend = TRUE, xlab = "Appraisal offer", ylab = "Number of cars", main = "Barplot between Online appraisal flag and Appraisal offer")
+```
+
+The above bar plot shows that for cars of each price range and each appraisal offer range, more transactions occur in-person compared to online.
+
+Chi-squared tests between Online appraisal flag and Price/Appraisal offer
+
+```{r}
+chisq.test(derived_data$price, derived_data$online_appraisal_flag)
+chisq.test(derived_data$appraisal_offer1, derived_data$online_appraisal_flag)
+```
+The p-values are very small, which implies that both Price and Appraisal offer are dependent on Online appraisal flag.
+
+
+# Relation between Online appraisal flag and Market
+
+Let us make bar plots to check the two types of transactions in each market (we will exclude the null values, i.e., for which online/in-person is not known).
+
+```{r, echo=FALSE}
+tally_oaf_m <- tally(online_appraisal_flag ~ market, data=derived_data_oaf)
+barplot(tally_oaf_m, beside = TRUE, legend = TRUE, xlab = "Market", ylab = "Number of cars", main = "Barplot between Online appraisal flag and Market")
+```
+
+The above bar plot shows that in each market, more transactions occur in-person compared to online.
+
+Chi-squared test between Online appraisal flag and Market
+
+```{r}
+chisq.test(derived_data$market, derived_data$online_appraisal_flag)
+```
+The p-value is very small, which implies that Appraisal offer and Market are dependent.

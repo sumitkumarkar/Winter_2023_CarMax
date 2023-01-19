@@ -1,0 +1,1 @@
+"0","barplot(tally(mydata$trim_descrip_appraisal), xlab = ""Trim description"", ylab = ""Number of cars"", main = ""Barplot of Trim description of Purchased cars"")"
